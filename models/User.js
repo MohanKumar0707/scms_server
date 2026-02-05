@@ -30,27 +30,13 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
-    // Student-specific fields
-    studentId: {
-        type: String,
-        unique: true,
-        sparse: true
-    },
-
     department: {
         type: String,
         required: true
     },
 
-    course: { type: String },
+    semester: { type: String },
 
-    yearOrSemester: { type: String },
-
-    status: {
-        type: String,
-        enum: ["active", "inactive", "suspended"],
-        default: "active"
-    }
 }, {
     timestamps: true
 });
