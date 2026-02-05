@@ -1,69 +1,40 @@
-import React, { useState } from "react";
+const mongoose = require("mongoose");
 
-function ComplaintForm() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: ""
-  });
+const complaintSchema = new mongoose.Schema({
+	title: {
+		type: String,
+		required: true
+	},
 
-  // input change handle
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+	description: {
+		type: String,
+		required: true
+	},
 
-  // form submit handle
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // page reload stop
+	student: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
+		required: true
+	},
 
-    await fetch("http://localhost:3000/complaint", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formData)
-    });
+	assignedTo: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User"
+	},
 
-    alert("Complaint submitted successfully");
+	status: {
+		type: String,
+		enum: ["pending", "in_progress", "resolved", "rejected"],
+		default: "pending"
+	},
 
-    // clear form
-    setFormData({ name: "", email: "", message: "" });
-  };
+	priority: {
+		type: String,
+		enum: ["low", "medium", "high"],
+		default: "medium"
+	}
+},
+	{ timestamps: true }
+);
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        required
-        value={formData.name}
-        onChange={handleChange}
-      />
-
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        required
-        value={formData.email}
-        onChange={handleChange}
-      />
-
-      <textarea
-        name="message"
-        placeholder="Complaint"
-        required
-        value={formData.message}
-        onChange={handleChange}
-      ></textarea>
-
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-
-export default ComplaintForm;
+module.exports = mongoose.model("Complaint", complaintSchema);
