@@ -33,6 +33,7 @@ app.listen(PORT, () =>
 // Fetch user to show in user management page
 
 app.get("/api/users", async (req, res) => {
+	
 	try {
 		const users = await User.find().select("-password");
 		res.json(users);

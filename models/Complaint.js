@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const complaintSchema = new mongoose.Schema({
+	
 	title: {
 		type: String,
 		required: true
