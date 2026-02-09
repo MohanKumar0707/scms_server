@@ -20,12 +20,12 @@ const Complaint = require('./models/Complaint');
 // ----------------------------------------------------------------------------------------------
 
 app.get("/", (req, res) => {
-	res.send("Complaint Tracking API Running");
+    res.send("Complaint Tracking API Running");
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
-	console.log(`Server running on port ${PORT}`)
+    console.log(`Server running on port ${PORT}`)
 );
 
 // ----------------------------------------------------------------------------------------------
@@ -33,21 +33,24 @@ app.listen(PORT, () =>
 // Fetch user to show in user management page
 
 app.get("/api/users", async (req, res) => {
-	
-	try {
-		const users = await User.find().select("-password");
-		res.json(users);
-	} catch (err) {
-		res.status(500).json({ message: "Server Error" });
-	}
+
+    try {
+        const users = await User.find().select("-password");
+        res.json(users);
+    } catch (err) {
+        res.status(500).json({ message: "Server Error" });
+    }
 });
 
 // ----------------------------------------------------------------------------------------------
+
 // Delete a user by ID
+
 app.delete("/api/users/:id", async (req, res) => {
+
     try {
         const user = await User.findById(req.params.id);
-        
+
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -58,15 +61,18 @@ app.delete("/api/users/:id", async (req, res) => {
         console.error("Delete Error:", err);
         res.status(500).json({ message: "Server Error" });
     }
-});	
+});
 
 // ----------------------------------------------------------------------------------------------
+
 // CREATE USER (POST)
+
 app.post("/api/users", async (req, res) => {
+
     try {
+
         const { registerNo, name, email, phone, password, role, department, semester } = req.body;
 
-        // Check if user already exists
         const userExists = await User.findOne({ email });
         if (userExists) {
             return res.status(400).json({ message: "User already exists with this email" });
@@ -77,7 +83,7 @@ app.post("/api/users", async (req, res) => {
             name,
             email,
             phone,
-            password, // Note: In a real app, hash this using bcrypt!
+            password,
             role,
             department,
             semester
@@ -91,19 +97,23 @@ app.post("/api/users", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
+
 // UPDATE USER (PUT)
+
 app.put("/api/users/:id", async (req, res) => {
+
     try {
+
         const updateData = { ...req.body };
-        
-        // If password is empty string (from our React form), don't update it
+
         if (!updateData.password) {
             delete updateData.password;
         }
 
         const updatedUser = await User.findByIdAndUpdate(
-            req.params.id, 
-            updateData, 
+            req.params.id,
+            updateData,
             { new: true }
         );
         res.json(updatedUser);
@@ -112,39 +122,28 @@ app.put("/api/users/:id", async (req, res) => {
     }
 });
 
-// REGISTER
-app.post("/api/auth/register", async (req, res) => {
-    console.log("hello:", req.body); 
-    try {
-        const {
-            registerNo,
-            name,
-            email,
-            phone,
-            password,
-            department,
-            role
-        } = req.body;
+// ----------------------------------------------------------------------------------------------
 
-        // basic validation
+// REGISTER
+
+app.post("/api/auth/register", async (req, res) => {
+
+    try {
+
+        const { registerNo, name, email, phone, password, department, role } = req.body;
+
         if (!registerNo || !name || !email || !password || !department) {
             return res.status(400).json({ message: "All required fields must be filled" });
         }
 
-        // check existing user
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(409).json({ message: "User already exists" });
         }
 
-        // save user (NO bcrypt)
         const user = new User({
-            registerNo,
-            name,
-            email,
-            phone,
-            password, // plain text as requested
-            department,
+            registerNo: registerNo, name: name, email: email,
+            phone: phone, password: password, department: department,
             role: role || "student"
         });
 
@@ -161,9 +160,14 @@ app.post("/api/auth/register", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
+
 // LOGIN
+
 app.post("/api/auth/login", async (req, res) => {
+
     try {
+
         const { registerNo, password } = req.body;
 
         if (!registerNo || !password) {
@@ -176,7 +180,6 @@ app.post("/api/auth/login", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        // plain password check (as requested)
         if (user.password !== password) {
             return res.status(401).json({ message: "Invalid password" });
         }
@@ -196,3 +199,4 @@ app.post("/api/auth/login", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
