@@ -112,3 +112,87 @@ app.put("/api/users/:id", async (req, res) => {
     }
 });
 
+// REGISTER
+app.post("/api/auth/register", async (req, res) => {
+    console.log("hello:", req.body); 
+    try {
+        const {
+            registerNo,
+            name,
+            email,
+            phone,
+            password,
+            department,
+            role
+        } = req.body;
+
+        // basic validation
+        if (!registerNo || !name || !email || !password || !department) {
+            return res.status(400).json({ message: "All required fields must be filled" });
+        }
+
+        // check existing user
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ message: "User already exists" });
+        }
+
+        // save user (NO bcrypt)
+        const user = new User({
+            registerNo,
+            name,
+            email,
+            phone,
+            password, // plain text as requested
+            department,
+            role: role || "student"
+        });
+
+        await user.save();
+
+        res.status(201).json({
+            message: "Account created successfully",
+            userId: user._id
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// LOGIN
+app.post("/api/auth/login", async (req, res) => {
+    try {
+        const { registerNo, password } = req.body;
+
+        if (!registerNo || !password) {
+            return res.status(400).json({ message: "Missing credentials" });
+        }
+
+        const user = await User.findOne({ registerNo });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // plain password check (as requested)
+        if (user.password !== password) {
+            return res.status(401).json({ message: "Invalid password" });
+        }
+
+        res.status(200).json({
+            message: "Login successful",
+            user: {
+                name: user.name,
+                phone: user.phone,
+                role: user.role
+            }
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
