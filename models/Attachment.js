@@ -5,7 +5,6 @@ const attachmentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Complaint"
     },
-
     fileUrl: String,
     uploadedBy: {
         type: mongoose.Schema.Types.ObjectId,
