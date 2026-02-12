@@ -16,6 +16,7 @@ app.use(express.json());
 
 const User = require('./models/User');
 const Department = require('./models/Department');
+const Category = require('./models/Category');
 
 // ----------------------------------------------------------------------------------------------
 
@@ -262,6 +263,36 @@ app.delete("/api/departments/:id", async (req, res) => {
         res.json({ message: "Department deleted successfully" });
     } catch (err) {
         res.status(500).json({ message: "Error deleting department" });
+    }
+});
+
+// ----------------------------------------------------------------------------------------------
+// FETCH DEPARTMENTS (To populate your dropdown/selection)
+
+app.get("/api/departments/categories", async (req, res) => {
+    try {
+        const departments = await Department.find({}, "name _id"); 
+        res.status(200).json(departments);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// 2. CREATE CATEGORY
+app.post("/api/categories", async (req, res) => {
+    try {
+        const { name, departmentId, priority } = req.body;
+        
+        const newCategory = new Category({
+            name,
+            department: departmentId, // This must be a valid ObjectId
+            priority
+        });
+
+        const savedCategory = await newCategory.save();
+        res.status(201).json(savedCategory);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
     }
 });
 
