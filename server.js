@@ -65,7 +65,7 @@ app.delete("/api/users/:id", async (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 
-// CREATE USER (POST)
+// Create a user
 
 app.post("/api/users", async (req, res) => {
 
@@ -99,7 +99,7 @@ app.post("/api/users", async (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 
-// UPDATE USER (PUT)
+// Update a user
 
 app.put("/api/users/:id", async (req, res) => {
 
@@ -124,7 +124,7 @@ app.put("/api/users/:id", async (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 
-// REGISTER
+// Register a user using login page
 
 app.post("/api/auth/register", async (req, res) => {
 
@@ -162,7 +162,7 @@ app.post("/api/auth/register", async (req, res) => {
 
 // ----------------------------------------------------------------------------------------------
 
-// LOGIN
+// Login user using login page
 
 app.post("/api/auth/login", async (req, res) => {
 
@@ -200,6 +200,9 @@ app.post("/api/auth/login", async (req, res) => {
 });
 
 // ----------------------------------------------------------------------------------------------
+
+// Fetch departments for Department Management
+
 app.get("/api/departments", async (req, res) => {
     try {
         const departments = await Department.find().sort({ name: 1 });
@@ -209,9 +212,14 @@ app.get("/api/departments", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
+
+// Create a new department
 
 app.post("/api/departments", async (req, res) => {
+
     try {
+
         const { name, code, description } = req.body;
 
         const exists = await Department.findOne({ code });
@@ -227,6 +235,10 @@ app.post("/api/departments", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
+
+// Update a department
+
 app.put("/api/departments/:id", async (req, res) => {
     try {
         const updatedDept = await Department.findByIdAndUpdate(
@@ -240,6 +252,10 @@ app.put("/api/departments/:id", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
+
+// Delete a department
+
 app.delete("/api/departments/:id", async (req, res) => {
     try {
         await Department.findByIdAndDelete(req.params.id);
@@ -248,3 +264,5 @@ app.delete("/api/departments/:id", async (req, res) => {
         res.status(500).json({ message: "Error deleting department" });
     }
 });
+
+// ----------------------------------------------------------------------------------------------

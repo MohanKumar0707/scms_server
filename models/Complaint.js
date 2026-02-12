@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 
 const complaintSchema = new mongoose.Schema({
 
-	complaintNo: {
-		type: String,
-		unique: true
-	},
-
 	student: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User",
