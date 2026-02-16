@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../../models/User");
 const Department = require("../../models/Department");
+
 // ----------------------------------------------------------------------------------------------
+
 // Fetch departments for Department Management
 
 router.get("/fetchDepartments", async (req, res) => {
