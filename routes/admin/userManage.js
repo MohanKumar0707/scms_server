@@ -6,7 +6,7 @@ const User = require("../../models/User");
 
 // Fetch user to show in user management page
 
-router.get("/mohan", async (req, res) => {
+router.get("/fetchUsers", async (req, res) => {
 
     try {
         const users = await User.find().select("-password");
