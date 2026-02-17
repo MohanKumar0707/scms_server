@@ -10,6 +10,7 @@ const departmentRoutes = require("./routes/admin/department");
 const categoryRoutes = require("./routes/admin/category");
 const authRoutes = require("./routes/common/authentication");
 const myComplaintsRoutes = require("./routes/student/mycomplaints");
+const adminComplaintRoutes = require("./routes/admin/complaint");
 
 // ----------------------------------------------------------------------------------------------
 
@@ -27,6 +28,7 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/student", myComplaintsRoutes);
+app.use("/api/admin/complaints", adminComplaintRoutes);
 
 // ----------------------------------------------------------------------------------------------
 
