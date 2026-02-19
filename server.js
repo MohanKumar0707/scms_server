@@ -12,6 +12,13 @@ const authRoutes = require("./routes/common/authentication");
 const myComplaintsRoutes = require("./routes/student/mycomplaints");
 const adminComplaintRoutes = require("./routes/admin/complaint");
 
+
+// ----------------------------------------------------------------------------------------------
+//staff routes
+const staffAssignedRoutes = require("./routes/staff/assignedComplaints");
+
+
+
 // ----------------------------------------------------------------------------------------------
 
 dotenv.config({ quiet: true });
@@ -29,6 +36,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/student", myComplaintsRoutes);
 app.use("/api/admin/complaints", adminComplaintRoutes);
+app.use("/api/staff/assigned", staffAssignedRoutes);
 
 // ----------------------------------------------------------------------------------------------
 

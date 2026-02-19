@@ -5,16 +5,15 @@ const Complaint = require("../../models/Complaint");
 
 
 // Express route example
-router.get('/api/complaints', async (req, res) => {
-    try {
-        // student field-ah populate panni adhula iruka name-ah edukirom
-        const complaints = await Complaint.find()
-            .populate('student', 'name') 
-            .sort({ createdAt: -1 });
-        res.json(complaints);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+router.get('/', async (req, res) => {
+  try {
+    const complaints = await Complaint.find({status: "Pending"})
+      .populate('student', 'name')
+      .sort({ createdAt: -1 });
+    res.json(complaints);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // Get only staff users
@@ -27,5 +26,28 @@ router.get("/staff", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch staff" });
   }
 });
+
+
+// routes/adminComplaints.js
+router.patch("/:id/assign", async (req, res) => {
+  try {
+    const { staffId } = req.body;
+
+    const complaint = await Complaint.findByIdAndUpdate(
+      req.params.id,
+      {
+        assignedTo: staffId,
+        status: "In Progress"
+      },
+      { new: true }
+    ).populate("assignedTo", "name department");
+
+    res.json(complaint);
+  } catch (err) {
+    console.error("Staff assign failed", err);
+    res.status(500).json({ message: "Staff assign failed" });
+  }
+});
+
 
 module.exports = router; 
