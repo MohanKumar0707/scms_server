@@ -2,18 +2,17 @@ const express = require("express");
 const router = express.Router();
 const Department = require("../../models/Department");
 const Category = require("../../models/Category");
+
 // ----------------------------------------------------------------------------------------------
-// 2. CREATE CATEGORY
+
+// Create a new category
+
 router.post("/createcategories", async (req, res) => {
+
     try {
+
         const { name, department, priority } = req.body;
-
-        const newCategory = new Category({
-            name,
-            department: department, // This must be a valid ObjectId
-            priority
-        });
-
+        const newCategory = new Category({ name, department, priority });
         const savedCategory = await newCategory.save();
         res.status(201).json(savedCategory);
     } catch (err) {
@@ -22,9 +21,14 @@ router.post("/createcategories", async (req, res) => {
     }
 });
 
+// ----------------------------------------------------------------------------------------------
+
+// Fetch all categories
+
 router.get("/fetchcategories", async (req, res) => {
+
     try {
-        const categories = await Category 
+        const categories = await Category
             .find()
             .populate("department", "name _id");
 
@@ -34,7 +38,10 @@ router.get("/fetchcategories", async (req, res) => {
     }
 });
 
-// PUT: Update an existing category
+// ----------------------------------------------------------------------------------------------
+
+// Update an existing category
+
 router.put('/updatecategories/:id', async (req, res) => {
     try {
         const updatedCategory = await Category.findByIdAndUpdate(
@@ -52,7 +59,10 @@ router.put('/updatecategories/:id', async (req, res) => {
     }
 });
 
-// DELETE: Remove a category
+// ----------------------------------------------------------------------------------------------
+
+// Delete a category
+
 router.delete('/deletecategories/:id', async (req, res) => {
     try {
         await Category.findByIdAndDelete(req.params.id);
@@ -61,7 +71,10 @@ router.delete('/deletecategories/:id', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-// FETCH DEPARTMENTS (To populate your dropdown/selection)
+
+// ----------------------------------------------------------------------------------------------
+
+// Fetch all departments (To populate your dropdown/selection in category dropdowns)
 
 router.get("/fetchDepartments/categories", async (req, res) => {
     try {
@@ -71,4 +84,7 @@ router.get("/fetchDepartments/categories", async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// ----------------------------------------------------------------------------------------------
+
 module.exports = router;
