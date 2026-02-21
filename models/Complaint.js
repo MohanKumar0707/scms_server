@@ -33,6 +33,8 @@ const complaintSchema = new mongoose.Schema({
 		default: "Medium"
 	},
 
+    attachments: [String],
+
 	assignedTo: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "User"

@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require("express"); 
 const router = express.Router();
 const Complaint = require("../../models/Complaint");
 const User = require("../../models/User");
 
 // ----------------------------------------------------------------------------------------------
 
-router.post("/api/complaints", async (req, res) => {
+router.post("/raisecomplaints", async (req, res) => {
 
     try {
-        s
+        
         const { studentId, title, description, category, department, priority } = req.body;
 
         if (!studentId || !title || !description) {
