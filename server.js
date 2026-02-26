@@ -9,7 +9,8 @@ const cors = require("cors");
 const userManageRoutes = require("./routes/admin/userManage");
 const departmentRoutes = require("./routes/admin/department");
 const categoryRoutes = require("./routes/admin/category");
-const adminGrievanceRoutes = require("./routes/admin/grievanceInbox");
+const assignComplaintsRoutes = require("./routes/admin/assignComplaints");
+const grievanceInboxRoutes = require("./routes/admin/grievanceInbox");
 
 // Common Routes
 const authRoutes = require("./routes/common/authentication");
@@ -39,7 +40,8 @@ app.use('/uploads', express.static('uploads'));
 app.use("/api/userManage", userManageRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/api/admin/complaints", adminGrievanceRoutes);
+app.use("/api/admin/complaints", assignComplaintsRoutes);
+app.use("/api/grievanceInbox", grievanceInboxRoutes);
 
 // Common Routes
 app.use("/api/auth", authRoutes);
