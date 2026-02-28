@@ -1,4 +1,4 @@
-const express = require("express"); 
+const express = require("express");
 const router = express.Router();
 const Complaint = require("../../models/Complaint");
 const User = require("../../models/User");
@@ -8,10 +8,9 @@ const User = require("../../models/User");
 const multer = require('multer');
 const path = require('path');
 
-// Configure how/where files are stored
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Ensure this folder exists
+        cb(null, 'uploads/');
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname));
@@ -20,10 +19,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// ----------------------------------------------------------------------------------------------
+
 router.post("/raisecomplaints", upload.single('image'), async (req, res) => {
+
     try {
+
         const { studentId, title, description, category, department, priority } = req.body;
-        
+
         const user = await User.findOne({ registerNo: studentId });
         if (!user) return res.status(404).json({ message: "Student not found" });
 
@@ -34,7 +37,6 @@ router.post("/raisecomplaints", upload.single('image'), async (req, res) => {
             category: category || null,
             department: department || null,
             priority: priority || "Medium",
-            // Store the path to the image
             attachments: req.file ? [`/uploads/${req.file.filename}`] : []
         });
 
@@ -44,6 +46,7 @@ router.post("/raisecomplaints", upload.single('image'), async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 });
+
 // ----------------------------------------------------------------------------------------------
 
 module.exports = router;
