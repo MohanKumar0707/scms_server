@@ -14,9 +14,11 @@ const grievanceInboxRoutes = require("./routes/admin/grievanceInbox");
 
 // Common Routes
 const authRoutes = require("./routes/common/authentication");
+const profileRoutes = require("./routes/common/profile");
 
 // Staff routes
 const staffAssignedRoutes = require("./routes/staff/assignedComplaints");
+const updateComplaintsRoutes = require("./routes/staff/updateComplaints");
 
 // Student routes
 const myComplaintsRoutes = require("./routes/student/mycomplaints");
@@ -45,9 +47,11 @@ app.use("/api/grievanceInbox", grievanceInboxRoutes);
 
 // Common Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/profile", profileRoutes); 
 
 // Staff Routes
 app.use("/api/staff/assigned", staffAssignedRoutes);
+app.use("/api/staff/update", updateComplaintsRoutes);
 
 // Student Routes
 app.use("/api/mycomplaints", myComplaintsRoutes);
