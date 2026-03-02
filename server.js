@@ -47,7 +47,7 @@ app.use("/api/grievanceInbox", grievanceInboxRoutes);
 
 // Common Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/profile", profileRoutes); 
+app.use("/api/profile", profileRoutes);
 
 // Staff Routes
 app.use("/api/staff/assigned", staffAssignedRoutes);
