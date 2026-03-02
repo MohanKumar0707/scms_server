@@ -8,6 +8,12 @@ const complaintSchema = new mongoose.Schema({
         required: true
     },
 
+    complaintId: {
+        type: String,
+        unique: true,
+        required: true
+    },
+
     category: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category"

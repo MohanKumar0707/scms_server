@@ -23,6 +23,7 @@ const updateComplaintsRoutes = require("./routes/staff/updateComplaints");
 // Student routes
 const myComplaintsRoutes = require("./routes/student/mycomplaints");
 const raiseComplaintRoutes = require("./routes/student/raisecomplaint");
+const ComplaintStatusTracker = require("./routes/student/complaintStatusTracker");
 
 // ----------------------------------------------------------------------------------------------
 
@@ -56,7 +57,7 @@ app.use("/api/staff/update", updateComplaintsRoutes);
 // Student Routes
 app.use("/api/mycomplaints", myComplaintsRoutes);
 app.use("/api/complaints", raiseComplaintRoutes);
-
+app.use("/api/complaintStatus", ComplaintStatusTracker);
 // ----------------------------------------------------------------------------------------------
 
 const User = require('./models/User');
