@@ -24,6 +24,7 @@ const updateComplaintsRoutes = require("./routes/staff/updateComplaints");
 const myComplaintsRoutes = require("./routes/student/mycomplaints");
 const raiseComplaintRoutes = require("./routes/student/raisecomplaint");
 const ComplaintStatusTracker = require("./routes/student/complaintStatusTracker");
+const complaintsHistoryRoutes = require("./routes/student/complaintsHistory");
 
 // ----------------------------------------------------------------------------------------------
 
@@ -58,6 +59,7 @@ app.use("/api/staff/update", updateComplaintsRoutes);
 app.use("/api/mycomplaints", myComplaintsRoutes);
 app.use("/api/complaints", raiseComplaintRoutes);
 app.use("/api/complaintStatus", ComplaintStatusTracker);
+app.use("/api/complaintHistory", complaintsHistoryRoutes);
 // ----------------------------------------------------------------------------------------------
 
 const User = require('./models/User');
