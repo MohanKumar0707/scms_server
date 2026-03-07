@@ -11,6 +11,7 @@ const departmentRoutes = require("./routes/admin/department");
 const categoryRoutes = require("./routes/admin/category");
 const assignComplaintsRoutes = require("./routes/admin/assignComplaints");
 const grievanceInboxRoutes = require("./routes/admin/grievanceInbox");
+const complaintReports = require("./routes/admin/complaintReports");
 
 // Common Routes
 const authRoutes = require("./routes/common/authentication");
@@ -47,6 +48,7 @@ app.use("/api/departments", departmentRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/admin/complaints", assignComplaintsRoutes);
 app.use("/api/grievanceInbox", grievanceInboxRoutes);
+app.use("/api/complaintReports", complaintReports);
 
 // Common Routes
 app.use("/api/auth", authRoutes);
@@ -57,12 +59,12 @@ app.use("/api/staff/assigned", staffAssignedRoutes);
 app.use("/api/staff/update", updateComplaintsRoutes);
 app.use("/api/staff/completed", completedComplaintsRoutes);
 
-
 // Student Routes
 app.use("/api/mycomplaints", myComplaintsRoutes);
 app.use("/api/complaints", raiseComplaintRoutes);
 app.use("/api/complaintStatus", ComplaintStatusTracker);
 app.use("/api/complaintHistory", complaintsHistoryRoutes);
+
 // ----------------------------------------------------------------------------------------------
 
 const User = require('./models/User');

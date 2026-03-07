@@ -7,7 +7,9 @@ const User = require("../../models/User");
 // ----------------------------------------------------------------------------------------------
 
 router.get("/my-complaints/:registerNo", async (req, res) => {
+
     try {
+        
         const user = await User.findOne({ registerNo: req.params.registerNo });
         if (!user) return res.status(404).json({ message: "User not found" });
 

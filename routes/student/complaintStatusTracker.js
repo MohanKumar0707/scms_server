@@ -3,9 +3,12 @@ const router = express.Router();
 const Complaint = require("../../models/Complaint");
 const ComplaintHistory = require("../../models/ComplaintHistory");
 
-// GET /api/complaintStatus/:id?registerNo=...
+// ----------------------------------------------------------------------------------------------
+
 router.get("/:id", async (req, res) => {
+
     try {
+
         const { id } = req.params;
         const { registerNo } = req.query;
 
@@ -39,5 +42,7 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ message: "Server error", error: error.message });
     }
 });
+
+// ----------------------------------------------------------------------------------------------
 
 module.exports = router;

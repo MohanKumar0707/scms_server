@@ -46,7 +46,10 @@ router.get('/', async (req, res) => {
         if (!staff) return res.status(404).json({ message: 'Staff not found' });
 
         // Get complaints assigned to this staff
-        const complaints = await Complaint.find({ assignedTo: staff._id })
+        const complaints = await Complaint.find({
+            assignedTo: staff._id,
+            status: { $nin: ["Rejected", "Resolved"] }
+        })
             .populate('student', 'name registerNo')
             .sort({ createdAt: -1 });
 

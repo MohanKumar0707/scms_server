@@ -23,6 +23,8 @@ router.get("/:registerNo", async (req, res) => {
             .populate("category", "name")
             .populate("department", "name").sort({ createdAt: -1 });
 
+            console.log(complaints)
+
         res.json(complaints);
     } catch (err) {
         console.error(err);
