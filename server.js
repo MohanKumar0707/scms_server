@@ -16,6 +16,7 @@ const complaintReports = require("./routes/admin/complaintReports");
 // Common Routes
 const authRoutes = require("./routes/common/authentication");
 const profileRoutes = require("./routes/common/profile");
+const dashboardRoutes = require("./routes/common/dashboard");
 
 // Staff routes
 const staffAssignedRoutes = require("./routes/staff/assignedComplaints");
@@ -53,6 +54,7 @@ app.use("/api/complaintReports", complaintReports);
 // Common Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/profile", profileRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Staff Routes
 app.use("/api/staff/assigned", staffAssignedRoutes);
