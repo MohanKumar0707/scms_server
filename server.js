@@ -19,6 +19,7 @@ const profileRoutes = require("./routes/common/profile");
 // Staff routes
 const staffAssignedRoutes = require("./routes/staff/assignedComplaints");
 const updateComplaintsRoutes = require("./routes/staff/updateComplaints");
+const completedComplaintsRoutes = require("./routes/staff/completedComplaints");
 
 // Student routes
 const myComplaintsRoutes = require("./routes/student/mycomplaints");
@@ -54,6 +55,8 @@ app.use("/api/profile", profileRoutes);
 // Staff Routes
 app.use("/api/staff/assigned", staffAssignedRoutes);
 app.use("/api/staff/update", updateComplaintsRoutes);
+app.use("/api/staff/completed", completedComplaintsRoutes);
+
 
 // Student Routes
 app.use("/api/mycomplaints", myComplaintsRoutes);
